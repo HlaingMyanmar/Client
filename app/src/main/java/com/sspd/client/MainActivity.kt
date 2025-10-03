@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,64 +33,68 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             setContent {
-                Text("Hello World")
+
+
+
+                CourseScreen()
+
             }
         }
     }
 }
 
 
-//@Composable
-//fun CourseScreen(
-//    viewModel: CourseViewModel = viewModel(),
-//    paddingValues: PaddingValues = PaddingValues(0.dp)
-//) {
-//    val courses by viewModel.courses
-//
-//    // load courses once
-//    LaunchedEffect(Unit) {
-//        viewModel.courses
-//    }
-//
-//    if (courses.isEmpty()) {
-//        // Loading indicator in the center
-//        Column(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .padding(paddingValues),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            CircularProgressIndicator()
-//        }
-//    } else {
-//        LazyColumn(
-//            contentPadding = paddingValues,
-//            verticalArrangement = Arrangement.spacedBy(8.dp),
-//            modifier = Modifier.padding(5.dp)
-//        ) {
-//            items(courses) { course ->
-//                ItemLi(course)
-//            }
-//        }
-//    }
-//}
-//
-//@Composable
-//fun ItemLi(course: Course) {
-//    Card(
-//        modifier = Modifier.fillMaxWidth(),
-//        colors = CardDefaults.cardColors(containerColor = PurpleGrey40)
-//    ) {
-//        Column(modifier = Modifier.padding(16.dp)) {
-//            Text(text = "Course ID : ${course.courseId}")
-//            Text(text = "Course Name : ${course.courseName}")
-//            Text(text = "Description : ${course.description ?: "N/A"}")
-//            Text(text = "Duration : ${course.duration} hours")
-//            Text(text = "Fee : ${course.fee} MMK")
-//        }
-//    }
-//}
+@Composable
+fun CourseScreen(
+    viewModel: CourseViewModel = viewModel(),
+    paddingValues: PaddingValues = PaddingValues(0.dp)
+) {
+    val courses by viewModel.courses
+
+    // load courses once
+    LaunchedEffect(Unit) {
+        viewModel.loadCourses()
+    }
+
+    if (courses.isEmpty()) {
+        // Loading indicator in the center
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        LazyColumn(
+            contentPadding = paddingValues,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(5.dp)
+        ) {
+            items(courses) { course ->
+                ItemLi(course)
+            }
+        }
+    }
+}
+
+@Composable
+fun ItemLi(course: Course) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = PurpleGrey40)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = "Course ID : ${course.courseId}")
+            Text(text = "Course Name : ${course.courseName}")
+            Text(text = "Description : ${course.description ?: "N/A"}")
+            Text(text = "Duration : ${course.duration} hours")
+            Text(text = "Fee : ${course.fee} MMK")
+        }
+    }
+}
 
 
 

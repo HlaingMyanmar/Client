@@ -16,10 +16,10 @@ class CourseViewModel : ViewModel() {
     fun loadCourses() {
         viewModelScope.launch {
             try {
-                val result = RetrofitInstance.api.getCourses()
-                _courses.value = result.courses
-                // Log to check
-                Log.d("CourseViewModel", "Courses fetched: $result")
+
+                val response = RetrofitInstance.api.getCourses()
+                val courseList: List<Course> = response.courses
+                _courses.value = courseList
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e("CourseViewModel", "Error fetching courses: ${e.message}")
